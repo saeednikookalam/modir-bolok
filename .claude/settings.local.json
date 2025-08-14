@@ -3,7 +3,8 @@
     "allow": [
       "Bash(pip install:*)",
       "Bash(rm:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": [],
