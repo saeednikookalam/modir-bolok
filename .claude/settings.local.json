@@ -4,7 +4,8 @@
       "Bash(pip install:*)",
       "Bash(rm:*)",
       "Bash(mkdir:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebFetch(domain:docs.bale.ai)"
     ],
     "deny": [],
     "ask": [],
