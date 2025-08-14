@@ -16,64 +16,75 @@ This is a Bale bot application built with FastAPI and python-bale-bot library. T
 modir-bolok/
 ├── src/                    # Source code directory
 │   ├── app.py             # FastAPI application with webhook endpoint
-│   ├── bot.py             # Main bot logic and message handlers
-│   └── config.py          # Configuration and environment variables
-├── main.py                # Standalone bot runner (long polling mode)
-├── test_webhook.py        # Webhook testing script
+│   ├── bot.py             # Main bot logic and message handlers (BASIC IMPLEMENTATION ONLY)
+│   └── config/
+│       └── config.py      # Configuration and environment variables
 ├── requirements.txt       # Python dependencies
 ├── Dockerfile            # Docker configuration for deployment
 ├── README.md             # User documentation
-├── CLAUDE.md             # This file - developer documentation
-└── .env.example          # Environment variables template
+└── CLAUDE.md             # This file - developer documentation
+
+MISSING FILES:
+├── main.py                # NOT IMPLEMENTED - Standalone bot runner
+├── test_webhook.py        # NOT IMPLEMENTED - Webhook testing script
+└── .env                   # NOT CREATED - Environment variables file
 ```
 
 ## Core Components
 
 ### 1. Bot Class (`src/bot.py`)
-- **BaleBot class**: Main bot implementation
-- **Message handlers**: 
-  - `/start` - Welcome message
-  - `/help` - Help information
-  - `/menu` - Interactive inline keyboard menu
-- **Callback handlers**: Process button clicks from inline keyboards
-- **Webhook support**: `process_webhook_update()` method for handling webhook updates
-- **Dual mode operation**: Supports both webhook and long polling modes
+- **BaleBot class**: Basic bot initialization with token
+- **Current Implementation**:
+  - Constructor that validates config and creates Bot instance
+  - `process_update()` method that only logs and returns True
+  - Singleton pattern via `get_bot()` function
+- **NOT IMPLEMENTED**:
+  - Message handlers for `/start`, `/help`, `/menu` commands
+  - Callback handlers for inline keyboards
+  - Actual message processing logic
+  - Connection to Bale API for sending messages
 
 ### 2. FastAPI Application (`src/app.py`)
-- **Lifespan management**: Initializes bot on startup, cleanup on shutdown
-- **Endpoints**:
-  - `GET /` - API status check
-  - `GET /health` - Health check endpoint
-  - `POST /webhook` - Receives and processes Bale webhook updates
-- **Webhook mode**: Bot runs in webhook mode when started via FastAPI
+- **Current Implementation**:
+  - Basic FastAPI app setup
+  - `GET /` - API status check (working)
+  - `GET /health` - Health check endpoint (working)
+  - `POST /webhook` - Receives webhook updates and calls bot.process_update()
+- **Issues**:
+  - No lifespan management implemented
+  - Webhook endpoint just passes data to bot without validation
+  - No actual webhook registration with Bale API
 
-### 3. Configuration (`src/config.py`)
-- Loads environment variables from `.env` file
-- Validates required configuration (BALE_BOT_TOKEN)
-- Centralized configuration management
+### 3. Configuration (`src/config/config.py`)
+- **Current Implementation**:
+  - Config class with validate() method
+  - Loads environment variables using dotenv
+  - Gets BALE_BOT_TOKEN from environment
+- **Issue**:
+  - .env file doesn't exist yet (needs to be created with token)
 
 ### 4. Standalone Runner (`main.py`)
-- Runs bot in long polling mode
-- Direct execution without web server
-- Suitable for development and simple deployments
+- **STATUS**: NOT IMPLEMENTED
+- Referenced in documentation but file doesn't exist
+- Would run bot in long polling mode
 
-## Bot Features
+## Bot Features (PLANNED - NOT IMPLEMENTED)
 
 ### Message Handling
-- Text message processing
-- Command recognition and routing
-- Echo functionality for non-command messages
-- Persian language interface
+- **NOT IMPLEMENTED**: Text message processing
+- **NOT IMPLEMENTED**: Command recognition and routing
+- **NOT IMPLEMENTED**: Echo functionality for non-command messages
+- **NOT IMPLEMENTED**: Persian language interface
 
 ### Interactive Elements
-- Inline keyboards with multiple buttons
-- Callback query handling for button interactions
-- Dynamic menu system
+- **NOT IMPLEMENTED**: Inline keyboards
+- **NOT IMPLEMENTED**: Callback query handling
+- **NOT IMPLEMENTED**: Dynamic menu system
 
 ### Update Processing
-- Supports message updates
-- Handles callback queries
-- Logs edited messages
+- **PARTIAL**: Receives updates but doesn't process them
+- **NOT IMPLEMENTED**: Message handling
+- **NOT IMPLEMENTED**: Callback query handling
 
 ## Running Modes
 
@@ -98,8 +109,8 @@ Required in `.env` file:
 - `BALE_BOT_TOKEN` - Bot token from @botfather in Bale
 
 ## Testing
-- `test_webhook.py` - Tests webhook endpoint with sample updates
-- Includes health check and webhook update simulation
+- **NOT IMPLEMENTED**: `test_webhook.py` file doesn't exist
+- No test files or test infrastructure currently in place
 
 ## Development Commands
 
@@ -155,9 +166,34 @@ The bot uses Bale's API which is similar to Telegram Bot API:
 - Admin panel for bot management
 - Analytics and usage tracking
 
+## Current Project Status
+
+### What's Working:
+- Basic FastAPI application structure
+- Webhook endpoint receives POST requests
+- Configuration loads from environment variables
+- Bot class initialization with Bale token
+
+### What's NOT Working:
+- No actual bot functionality implemented
+- No message handlers or command processing
+- No connection to Bale API for sending messages
+- Missing main.py for long polling mode
+- Missing test files
+- Missing .env file
+
+### Immediate TODOs:
+1. Create .env file with BALE_BOT_TOKEN
+2. Implement actual message handling in bot.py
+3. Add command handlers (/start, /help, /menu)
+4. Implement sending messages via Bale API
+5. Create main.py for long polling mode
+6. Add test_webhook.py for testing
+7. Implement inline keyboards and callbacks
+
 ## Notes for Developers
 - The bot instance is singleton (single instance throughout app lifecycle)
-- Webhook mode is automatically enabled when running via FastAPI
-- All text responses are in Persian (Farsi)
-- The bot handles both private and group chats
+- Currently just a skeleton - needs full implementation
+- All text responses should be in Persian (Farsi)
+- The bot should handle both private and group chats
 - Callback data should be kept short (max 64 bytes in Bale)

@@ -5,8 +5,7 @@ load_dotenv()
 
 
 class Config:
-    # BALE_BOT_TOKEN = os.getenv("BALE_BOT_TOKEN")
-    BALE_BOT_TOKEN = '1376465249:gbcmr17nSXK5qvjurzE9ypEvl5PyGEyXkEtDHc2E'
+    BALE_BOT_TOKEN = os.getenv("BALE_BOT_TOKEN")
 
     debug: bool = True
 
