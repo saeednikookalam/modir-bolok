@@ -5,6 +5,8 @@ WORKDIR /app
 # ENVs
 ENV PYTHONPATH=/app/src
 
+RUN apt install curl
+
 # INstall uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
