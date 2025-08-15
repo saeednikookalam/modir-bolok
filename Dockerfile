@@ -2,14 +2,13 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# ENVs
 ENV PYTHONPATH=/app/src
 
-# Install prerequisites
+
 RUN apt-get update && apt-get install -y curl
 
-# INstall uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+RUN pip install --no-cache-dir uv
 
 COPY requirements.txt .
 
