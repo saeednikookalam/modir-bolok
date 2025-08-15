@@ -2,12 +2,17 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+# ENVs
+ENV PYTHONPATH=/app/src
+
+# INstall uv
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+
+RUN uv pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
-
-ENV PYTHONPATH=/app/src
 
 EXPOSE 80
 

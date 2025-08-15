@@ -3,6 +3,10 @@
 ## Project Overview
 This is a Bale bot application built with FastAPI and python-bale-bot library. The bot supports both webhook and long polling modes for receiving updates from Bale messaging platform.
 
+## Documentation & References
+- **Bale Bot API Documentation**: https://docs.bale.ai/
+- **Official reference for all bot API methods and webhook setup**
+
 ## Technology Stack
 - **Python 3.12**
 - **FastAPI** - Web framework for webhook endpoint
